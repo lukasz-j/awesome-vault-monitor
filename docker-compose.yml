@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  web:
+    build:
+      context: ./build-context
+      dockerfile: ./Dockerfile-web
+    links:
+      - db
+    volumes:
+      - ./:/usr/project-root
+      - ./www:/var/www
+    ports:
+      - "9800:80"
+      - "9801:81"
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    ports:
+      - "9836:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./build-context/conf/mysql-auth.cnf:/etc/mysql/conf.d/auth.cnf
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    ports:
+      - "9802:80"

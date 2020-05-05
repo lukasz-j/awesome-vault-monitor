@@ -1,0 +1,7 @@
+mysql-data
+**/.sass-cache
+www/front/build
+www/static/build
+**/node_modules
+**/vendor
+*.code-workspace

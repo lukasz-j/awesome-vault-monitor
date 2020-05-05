@@ -1,0 +1,8 @@
+{
+    "name": "lukaszj/awesome-vault-monitor",
+    "type": "project",
+    "minimum-stability": "stable",
+    "require-dev": {
+        "eaglewu/swoole-ide-helper": "dev-master"
+    }
+}

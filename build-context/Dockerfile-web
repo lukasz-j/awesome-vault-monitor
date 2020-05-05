@@ -1,0 +1,28 @@
+FROM php:7.4-cli
+
+RUN apt-get update \
+    && apt-get install -y git htop unzip \
+    && apt-get install -y libonig-dev
+
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+
+RUN pecl install swoole
+
+ADD conf/php-swoole.ini /usr/local/etc/php/conf.d/php-swoole.ini
+
+WORKDIR /root
+
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/bin/composer
+
+RUN ln -s /usr/local/bin/php /usr/bin/php
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install -g grunt-cli
+
+RUN apt install -y ruby ruby-dev
+RUN gem install sass
+
+CMD ["php", "/var/www/src/run.php"]
